@@ -1,7 +1,7 @@
 from random import randint
-from dataCenterConfig import DataCenterConfig, Server
+from dataCenter import DataCenter, Server
 
-MAX_ALLOC_TRIES = 25
+MAX_ALLOC_TRIES = 100
 # Pools example [1,0,0,2,1] 
 # This means servers 2 and 3 are assigned to pool 0,
 # servers 0 and 4 are assigned to pool 1
@@ -15,16 +15,16 @@ pools = []
 # other numbers mean server N is allocated there
 dataCenter = [[]]
 
-# config is an object of the class dataCenterConfig defined in dataCenterCOnfig.py
+# config is an object of the class DataCenter defined in dataCenterCOnfig.py
 # @dataclass
-# class DataCenterConfig:
+# class DataCenter:
 #     rows: int # number of rows
 #     slots: int # number of slots per row
 #     unavailable: array[int] # coordinates of unavailable slots
 #     pools: int # number of pools
 #     servers: array[int] #array with server sizes. len(servers) = number of servers
 
-def randomSolution(config: DataCenterConfig):
+def randomSolution(config: DataCenter):
     pools = []
 
     # Randomly assign pools to servers
@@ -73,7 +73,7 @@ servers = [Server(3,10), Server(3,10), Server(2,5), Server(1,5), Server(1,1)]
 rows = 2
 slots = 5
 pools = 2
-config = DataCenterConfig(rows,slots,unavailable,pools,servers)
+config = DataCenter(rows,slots,unavailable,pools,servers)
 
 pools, dataCenter = randomSolution(config)
 
