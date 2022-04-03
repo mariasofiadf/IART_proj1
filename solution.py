@@ -10,14 +10,16 @@ def randomSolution(config: DataCenter):
     for i in range(len(config.servers)):
         pools.append(randint(0,config.pools-1))
 
+    # Initialize data center with -1
     dataCenter =[[-1 for r in range(config.slots)] for s in range(config.rows)]
 
-    # Set unavailable slots accordingly
+    # Set unavailable slots accordingly (-2)
     for coords in config.unavailable:
         print(coords)
         r,s = coords
-        dataCenter[r][s] = -2
+        dataCenter[r][s] = -2 # -2 means unavailable
 
+    # Try to assign servers
     for index, server in enumerate(config.servers):
         assigned = False
         tries = 0
@@ -40,9 +42,10 @@ def randomSolution(config: DataCenter):
             if not valid:
                 continue
             
-            # If it's valid assign it
+            # If it's valid, assign it
             for i in range(server.slots):
                 dataCenter[r][s+i] = index
 
             assigned = True
+            
     return (pools, dataCenter)
