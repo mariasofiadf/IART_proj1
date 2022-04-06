@@ -13,4 +13,4 @@ class DataCenter:
     slots: int # number of slots per row
     unavailable: List[Tuple] # coordinates of unavailable slots
     pools: int # number of pools
-    servers: List[Server] #array with server sizes. len(servers) = number of servers
+    servers: List[Server] #array with servers. len(servers) = number of servers
