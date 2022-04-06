@@ -1,6 +1,7 @@
 from random import randint
-from dataCenter import DataCenter, Server
+from dataCenter import DataCenter, Server, Solution
 from solution import randomSolution
+from evaluation import evaluate
 
 
 # Pools example [1,0,0,2,1] 
@@ -38,4 +39,5 @@ solution = randomSolution(config)
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)
 
+print(evaluate(solution, config))
 
