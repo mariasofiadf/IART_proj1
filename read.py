@@ -1,7 +1,9 @@
 from cmath import pi
 from random import seed
 from typing import Tuple
-from dataCenter import Server, DataCenter
+from dataCenter import Server, DataCenter, Solution
+from solution import randomSolution
+
 
 
 def readDataCenter(file_name):
@@ -24,6 +26,16 @@ def readDataCenter(file_name):
     return DataCenter(rows, slots, unavailable_coord, pools, servers)
 
 
-def writeSolution(sol, file_name):
-    
+def writeSolution(sol: Solution, file_name):
+   
+    data_center = sol.dataCenter
+    pools = sol.pools
+    for server in range(0, len(pools)):
+        row_index = [(index, row.index(server)) for index, row in enumerate(data_center) if server in row]
+        print(row_index)
 
+
+dataCenter = readDataCenter("problem.txt")
+sol = randomSolution(dataCenter)
+writeSolution(sol, "")
+print(sol)
