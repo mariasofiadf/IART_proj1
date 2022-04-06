@@ -32,9 +32,10 @@ slots = 5
 pools = 2
 config = DataCenter(rows,slots,unavailable,pools,servers)
 
-pools, dataCenter = randomSolution(config)
 
-print("Pools: ", pools)
-print("DataCenter: ", dataCenter)
+solution = randomSolution(config)
+
+print("Pools: ", solution.pools)
+print("DataCenter: ", solution.dataCenter)
 
 

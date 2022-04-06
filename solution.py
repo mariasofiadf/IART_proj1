@@ -1,4 +1,4 @@
-from dataCenter import DataCenter, Server
+from dataCenter import DataCenter, Server, Solution
 from random import randint
 
 MAX_ALLOC_TRIES = 100
@@ -47,5 +47,5 @@ def randomSolution(config: DataCenter):
                 dataCenter[r][s+i] = index
 
             assigned = True
-            
-    return (pools, dataCenter)
+    
+    return Solution(pools, dataCenter)
