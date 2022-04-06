@@ -1,5 +1,6 @@
 from random import randint
 from dataCenter import DataCenter, Server, Solution
+from UI import display
 from solution import randomSolution
 from evaluation import evaluate
 
@@ -41,3 +42,4 @@ print("DataCenter: ", solution.dataCenter)
 
 print(evaluate(solution, config))
 
+display(solution)
