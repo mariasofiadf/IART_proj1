@@ -27,15 +27,23 @@ def readDataCenter(file_name):
 
 
 def writeSolution(sol: Solution, file_name):
-   
+    f = open(file_name, 'w')
     data_center = sol.dataCenter
     pools = sol.pools
     for server in range(0, len(pools)):
-        row_index = [(index, row.index(server)) for index, row in enumerate(data_center) if server in row]
-        print(row_index)
+        row_slot_index = [(index, row.index(server)) for index, row in enumerate(data_center) if server in row]
+       # line = str(row_slot_index[0][0]) +  str(pools[server]
+        if((row_slot_index)):
+            line = str(row_slot_index[0][0]) + " " + str(row_slot_index[0][1]) + " " +  str(pools[server])
+            f.write(line)
+            f.write('\n')
+        else:
+            f.write("X\n")
 
 
 dataCenter = readDataCenter("problem.txt")
-sol = randomSolution(dataCenter)
-writeSolution(sol, "")
-print(sol)
+print(dataCenter)
+sol1 = randomSolution(dataCenter)
+
+print(sol1)
+writeSolution(sol1,"solution.txt")
