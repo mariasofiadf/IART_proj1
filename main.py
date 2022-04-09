@@ -39,5 +39,4 @@ solution = randomSolution(config)
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)
 
-print(evaluate(solution, config))
 
