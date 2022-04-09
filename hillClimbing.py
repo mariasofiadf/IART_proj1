@@ -1,0 +1,13 @@
+from dataCenter import DataCenter, Solution
+from evaluation import evaluate
+from neighbourhood import neighbourhood
+from solution import randomSolution
+
+
+def hillClimbing(config: DataCenter, iterations: int, neighbourModes):
+    solution = randomSolution(config)
+    for i in range(iterations):
+        newSolution = neighbourhood(solution,neighbourModes,config)
+        if(evaluate(newSolution, config) >= evaluate(solution,config)):
+            solution = newSolution
+    return solution

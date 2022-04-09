@@ -19,7 +19,6 @@ def randomSolution(config: DataCenter):
 
     # Set unavailable slots accordingly (-2)
     for coords in config.unavailable:
-        print(coords)
         r,s = coords
         dataCenter[r][s] = -2 # -2 means unavailable
 

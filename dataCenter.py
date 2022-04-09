@@ -21,3 +21,6 @@ class DataCenter:
 class Solution:
     pools: List[int]
     dataCenter: List[List[int]]
+    def deepcopy(self):
+        
+        return Solution(self.pools.copy(),[row.copy() for row in self.dataCenter])

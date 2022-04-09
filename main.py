@@ -1,5 +1,7 @@
 from random import randint
 from dataCenter import DataCenter, Server, Solution
+from hillClimbing import hillClimbing
+from neighbourhood import Neighbourhood, neighbourhood
 from solution import randomSolution
 from evaluation import evaluate
 
@@ -34,9 +36,12 @@ pools = 2
 config = DataCenter(rows,slots,unavailable,pools,servers)
 
 
-solution = randomSolution(config)
+neighbourModes = [Neighbourhood.ADD_SV,Neighbourhood.RMV_SV,Neighbourhood.SWTCH_SV_POOL]
+solution = hillClimbing(config,1000,neighbourModes)
 
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)
+
+print("Evaluation: ", evaluate(solution, config))
 
 
