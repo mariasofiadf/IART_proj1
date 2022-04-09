@@ -27,7 +27,7 @@ dataCenter = [[]]
 #     servers: array[int] #array with server sizes. len(servers) = number of servers
 
 unavailable = [(0,0)]
-servers = [Server(3,10), Server(3,10), Server(2,5), Server(1,5), Server(1,1)]
+servers = [Server(0,3,10), Server(1,3,10), Server(2,2,5), Server(3,1,5), Server(4,1,1)]
 rows = 2
 slots = 5
 pools = 2

@@ -26,7 +26,6 @@ def randomSolution(config: DataCenter):
     # Try to assign servers
     for index, server in enumerate(config.servers):
         assigned = False
-        tries = 0
-        solution = assignServer(solution,config,server,tries)
+        solution = assignServer(solution,config,server)
     
     return Solution(pools, dataCenter)

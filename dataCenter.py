@@ -5,6 +5,7 @@ from typing import List, Tuple
 
 @dataclass
 class Server:
+    id: int
     slots: int # number of slots server occupies
     capacity: int 
 

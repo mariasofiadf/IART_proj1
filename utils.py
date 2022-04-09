@@ -1,7 +1,8 @@
 from random import randint
 from dataCenter import DataCenter, Solution, Server
+MAX_ALLOC_TRIES = 100
 
-def assignServer(solution: Solution, config: DataCenter, server: Server, tries: int):
+def assignServer(solution: Solution, config: DataCenter, server: Server, tries = MAX_ALLOC_TRIES):
     for i in range(tries):
         tries += 1
         # Get random row and slot
@@ -23,7 +24,7 @@ def assignServer(solution: Solution, config: DataCenter, server: Server, tries: 
         
         # If it's valid, assign it
         for i in range(server.slots):
-            solution.dataCenter[r][s+i] = server
+            solution.dataCenter[r][s+i] = server.id
 
         break
     return solution
