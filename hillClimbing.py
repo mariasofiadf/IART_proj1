@@ -9,5 +9,6 @@ def hillClimbing(config: DataCenter, iterations: int, neighbourModes):
     for i in range(iterations):
         newSolution = neighbourhood(solution,neighbourModes,config)
         if(evaluate(newSolution, config) >= evaluate(solution,config)):
+            print('>%d f(%s) => %.5f' % (i, newSolution, evaluate(solution,config)))
             solution = newSolution
     return solution
