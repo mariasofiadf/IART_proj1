@@ -105,7 +105,7 @@ def unassign_server(solution: Solution, server: Server):
     for row_no, row in enumerate(solution.dataCenter):
         for slot_no, slot in enumerate(row):
             if slot == server.id:
-                solution.dataCenter[row_no][slot_no:server.slots] = [-1] * server.slots
+                solution.dataCenter[row_no][slot_no:slot_no + server.slots] = [-1] * server.slots
                 break  # Stop searching inside row
         else:
             continue  # Next row
