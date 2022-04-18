@@ -11,15 +11,15 @@ def readDataCenter(file_name):
     unavailable_coord = []
     servers = []
     lines = f.readlines() # Read in all the lines of the file into a list of lines
-    
+
     rows, slots, unavailable, pools, _ = (int(val) for val in lines[0].split()) #Data from first line
 
     for i in range (1, unavailable +1): # unavailable slots coordenates
         coords = [int(val) for val in lines[i].split()]
         unavailable_coord.append((coords[0], coords[1]))
 
+    id = 0
     for i in range (unavailable +1, len(lines)):# servers size and capacity
-        id = 0
         server_values = [int(val) for val in lines[i].split()]
         server = Server( id,server_values[0], server_values[1])
         servers.append(server)
