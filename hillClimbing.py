@@ -8,6 +8,7 @@ def hillClimbing(config: DataCenter, iterations: int, neighbourModes):
     solution = randomSolution(config)
     for i in range(iterations):
         newSolution = neighbourhood(solution,neighbourModes,config)
+        print(newSolution)
         if(evaluate(newSolution, config) >= evaluate(solution,config)):
             solution = newSolution
     return solution
