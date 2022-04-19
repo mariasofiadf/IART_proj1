@@ -24,7 +24,7 @@ def simulatedAnnealing(config: DataCenter, iterations: int, neighbourModes, init
         if(diff > 0 or rand() < probabilty):
             curr, curr_eval = new_sol, new_sol_eval
         print('>%d f(%s) = %.5f, prob: %.3f' % (i, curr, curr_eval, probabilty))
-    return [curr, curr_eval]
+    return curr
 
 
 unavailable = [(0,0)]
@@ -42,6 +42,6 @@ iter = 4500
 
 
 sol = simulatedAnnealing(config, iter, neighbourModes, temp)
-print(exp(1))
 print(sol)
+print(evaluate_solution(sol,config))
     
