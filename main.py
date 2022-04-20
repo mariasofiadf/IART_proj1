@@ -39,7 +39,7 @@ config = DataCenter(rows,slots,unavailable,pools,servers)
 
 neighbourModes = [Neighbourhood.ADD_SV,Neighbourhood.RMV_SV,Neighbourhood.SWTCH_SV_POOL,Neighbourhood.MOV_SV_SLOT, Neighbourhood.SWTCH_SV_ROW]
 
-solution = geneticAlgorithm(config,100)
+solution = geneticAlgorithm(config,neighbourModes,100)
 #solution = hillClimbing(config,500,neighbourModes)
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)

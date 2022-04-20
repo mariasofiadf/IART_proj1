@@ -3,11 +3,11 @@ from random import random, choices
 from django.urls import conf
 from dataCenter import DataCenter, Solution
 from evaluation import evaluate_solution
-from neighbourhood import assign_server_to_first_available_slot
+from neighbourhood import assign_server_to_first_available_slot, neighbourhood
 from solution import randomSolution
 import sys
 
-def geneticAlgorithm(config: DataCenter, populationSize = 100, generations = 100, mutationChance = 1, replacedEachGeneration = 100):
+def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, generations = 100, mutationChance = 1, replacedEachGeneration = 100):
     # Get first generation
     population = []
     for i in range(populationSize):
@@ -18,7 +18,7 @@ def geneticAlgorithm(config: DataCenter, populationSize = 100, generations = 100
 
     for gen in range(generations):
         print("Generation: ", gen)
-        population = getOffspring(population, config)
+        population = getOffspring(population, config, mutationChance,neighbourModes)
         # Get best solution
         for sol in population:
             if(evaluate_solution(sol, config) > evaluate_solution(bestSolution, config)):
@@ -28,7 +28,7 @@ def geneticAlgorithm(config: DataCenter, populationSize = 100, generations = 100
     return bestSolution
 
 
-def getOffspring(population, config):
+def getOffspring(population, config, mutationChance,neighbourModes):
     populationValues = [evaluate_solution(sol,config) for sol in population]
     summ = sum(populationValues)+ sys.float_info.min # sum of evaluation of solutions
     roulette = [val/summ for val in populationValues]
@@ -44,7 +44,11 @@ def getOffspring(population, config):
             if( y != x or len(set(roulette))==1):
                 break
         child = reproduce(x,y,config)
+        r = random()
+        if(r < mutationChance):
+            child = neighbourhood(child,neighbourModes,config)
         newPopulation.append(child)
+
 
     return newPopulation
 
@@ -62,6 +66,8 @@ def reproduce(x: Solution, y: Solution, config: DataCenter):
             while(x.dataCenter[r][s] == x.dataCenter[r][s+i]):
                 dataCenter[r][s+i] = x.dataCenter[r][s+i]
                 i+=1
+                if(s+i > len(dataCenter[0])-1):
+                    break
 
     child = Solution(pools, dataCenter)
 
