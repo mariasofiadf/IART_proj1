@@ -1,8 +1,7 @@
 from random import randint
 
+from src.solution.data_center import DataCenter, Solution
 from src.utils import assign_server
-
-from data_center import DataCenter, Solution
 
 MAX_ALLOC_TRIES = 100
 

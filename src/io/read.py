@@ -1,5 +1,4 @@
 from src.solution.data_center import Server, DataCenter, Solution
-from src.solution.solution import random_solution
 
 
 def read_data_center(file_name):

@@ -1,4 +1,4 @@
-from data_center import DataCenter, Solution
+from src.solution.data_center import DataCenter, Solution
 
 
 def evaluate_solution(solution: Solution, data_center: DataCenter):
