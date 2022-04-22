@@ -1,79 +1,57 @@
-from math import exp
+import sys
 
-from matplotlib import pyplot
-
-from algorithms.genetic import genetic
+from src.algorithms.genetic import genetic
+from src.algorithms.hill_climbing import hill_climbing
 from src.algorithms.simulated_annealing import simulated_annealing
-from src.io.read import read_data_center
+from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
-from src.solution.data_center import DataCenter, Server
-from src.solution.evaluation import evaluate_solution
+from src.solution.data_center import Solution
 
-# Pools example [1,0,0,2,1]
-# This means servers 2 and 3 are assigned to pool 0,
-# servers 0 and 4 are assigned to pool 1
-# and server 3 is assigned to pool 2
-# pools = []
+if __name__ == '__main__':
+    if len(sys.argv) <= 3:
+        print("Usage: python main.py <input_file> <options>")
+        exit(1)
 
-# dataCenter example [[1,1,1,-2,-1,-1,3,5],
-#                     [-1,2,2,4,4,4,-2,0 ]] 
-# -1 means slot is available
-# -2 means slot is unavailable
-# other numbers mean server N is allocated there
-dataCenter = [[]]
+    input_file = sys.argv[1]
+    data_center = read_data_center(input_file)
 
-# config is an object of the class DataCenter defined in dataCenterCOnfig.py
-# @dataclass
-# class DataCenter:
-#     rows: int # number of rows
-#     slots: int # number of slots per row
-#     unavailable: array[int] # coordinates of unavailable slots
-#     pools: int # number of pools
-#     servers: array[int] #array with server sizes. len(servers) = number of servers
+    algorithm = sys.argv[2]
+    neighbour_modes = [Neighbourhood.ADD_SV, Neighbourhood.RMV_SV, Neighbourhood.SWTCH_SV_POOL,
+                       Neighbourhood.MOV_SV_SLOT, Neighbourhood.SWTCH_SV_ROW]
 
-unavailable = [(0, 0), (0, 4)]
-servers = [Server(0, 3, 10), Server(1, 3, 10), Server(2, 2, 5), Server(3, 1, 5), Server(4, 1, 1)]
-rows = 2
-slots = 5
-pools = 2
-config = DataCenter(rows, slots, unavailable, pools, servers)
+    it_list = []
+    evaluations = []
+    no_iterations = 150
+    sol: Solution = None
+    idk: int = None
 
-neighbourModes = [Neighbourhood.ADD_SV, Neighbourhood.RMV_SV, Neighbourhood.SWTCH_SV_POOL, Neighbourhood.MOV_SV_SLOT,
-                  Neighbourhood.SWTCH_SV_ROW]
+    if algorithm == 'genetic':
+        population_size = int(sys.argv[3])
+        generations = int(sys.argv[4])
+        mutation_chance = float(sys.argv[5])
+        replaced_each_generation = int(sys.argv[6])
+        sol = genetic(data_center, neighbour_modes, population_size, generations, mutation_chance,
+                      replaced_each_generation)
+    elif algorithm == 'hillclimbing':
+        iterations = int(sys.argv[3])
+        sol = hill_climbing(data_center, iterations, neighbour_modes)
+    elif algorithm == 'simulatedannealing':
+        iterations = int(sys.argv[3])
+        initial_temperature = float(sys.argv[4])
+        temperature_mode = sys.argv[5]
+        sol, idk = simulated_annealing(data_center, iterations, neighbour_modes, initial_temperature, temperature_mode)
+    else:
+        print("Unknown algorithm")
+        exit(1)
 
-solution = genetic(config, neighbourModes, 4, 1)
-# solution = hillClimbing(config,500,neighbourModes)
-print("Pools: ", solution.pools)
-print("DataCenter: ", solution.dataCenter)
+    write_solution(sol, "/data/solution.txt")
 
-print("Evaluation: ", evaluate_solution(solution, config))
-
-unavailable = [(0, 0)]
-
-evaluations = list()
-it_list = list()
-
-servers = [Server(0, 3, 10), Server(1, 3, 10), Server(2, 2, 5), Server(3, 1, 5), Server(4, 1, 1)]
-rows = 2
-slots = 5
-pools = 2
-config = read_data_center('../../data/problem.txt')
-
-neighbourModes = [Neighbourhood.ADD_SV, Neighbourhood.RMV_SV, Neighbourhood.SWTCH_SV_POOL]
-
-temp = 100
-no_iterations = 150
-
-sol = simulated_annealing(config, no_iterations, neighbourModes, temp, 'linear')
-print(exp(1))
-print(sol)
-
-pyplot.plot(it_list, evaluations)
-pyplot.ylabel('Evaluation')
-pyplot.xlabel('Iteration')
-pyplot.xlim(0, no_iterations)
-pyplot.ylim(0, sol[1] + 2)
-pyplot.show()
-
-# for i in range (len(it_list)):
-# print('%d -> eval: %.2f' % (it_list[i], evaluations[i]))
+    # pyplot.plot(it_list, evaluations)
+    # pyplot.ylabel('Evaluation')
+    # pyplot.xlabel('Iteration')
+    # pyplot.xlim(0, no_iterations)
+    # pyplot.ylim(0, idk + 2)
+    # pyplot.show()
+    #
+    # for i in range(len(it_list)):
+    #     print('%d -> eval: %.2f' % (it_list[i], evaluations[i]))

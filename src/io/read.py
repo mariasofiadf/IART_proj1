@@ -36,11 +36,3 @@ def write_solution(sol: Solution, file_name):
             f.write('\n')
         else:
             f.write("X\n")
-
-
-dataCenter = read_data_center("../../data/problem.txt")
-print(dataCenter)
-sol1 = random_solution(dataCenter)
-
-print(sol1)
-write_solution(sol1, "../../data/solution.txt")
