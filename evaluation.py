@@ -1,5 +1,5 @@
 import sys
-from dataCenter import DataCenter, Server, Solution
+from data_center import DataCenter, Server, Solution
 import numpy as np
 
 def evaluate_solution(solution: Solution, data_center: DataCenter):

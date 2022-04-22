@@ -1,7 +1,7 @@
 from cmath import pi
 from random import seed
 from typing import Tuple
-from dataCenter import Server, DataCenter, Solution
+from data_center import Server, DataCenter, Solution
 from solution import randomSolution
 
 

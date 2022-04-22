@@ -1,7 +1,7 @@
 from random import randint
-from dataCenter import DataCenter, Server, Solution
+from data_center import DataCenter, Server, Solution
 from genetic import geneticAlgorithm
-from hillClimbing import hillClimbing
+from hill_climbing import hillClimbing
 from neighbourhood import Neighbourhood, neighbourhood
 from solution import randomSolution
 from evaluation import evaluate_solution

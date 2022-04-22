@@ -1,4 +1,4 @@
-from dataCenter import DataCenter, Solution
+from data_center import DataCenter, Solution
 from evaluation import evaluate_solution  
 from neighbourhood import neighbourhood
 from solution import randomSolution

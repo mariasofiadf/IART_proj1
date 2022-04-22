@@ -3,7 +3,7 @@ from enum import Enum
 
 import numpy as np
 
-from dataCenter import Solution, DataCenter, Server
+from data_center import Solution, DataCenter, Server
 
 
 class Neighbourhood(Enum):

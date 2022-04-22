@@ -1,7 +1,7 @@
 
 from random import random, choices
 from django.urls import conf
-from dataCenter import DataCenter, Solution
+from data_center import DataCenter, Solution
 from evaluation import evaluate_solution
 from neighbourhood import assign_server_to_first_available_slot, neighbourhood
 from solution import randomSolution

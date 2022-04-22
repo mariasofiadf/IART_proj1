@@ -1,5 +1,5 @@
 from random import randint
-from dataCenter import DataCenter, Solution, Server
+from data_center import DataCenter, Solution, Server
 MAX_ALLOC_TRIES = 100
 
 def assignServer(solution: Solution, config: DataCenter, server: Server, tries = MAX_ALLOC_TRIES):
