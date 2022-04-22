@@ -5,8 +5,8 @@ from src.solution.data_center import DataCenter, Solution, Server
 MAX_ALLOC_TRIES = 100
 
 
-def assignServer(solution: Solution, config: DataCenter, server: Server, tries=MAX_ALLOC_TRIES):
-    for i in range(tries):
+def assign_server(solution: Solution, config: DataCenter, server: Server, tries=MAX_ALLOC_TRIES):
+    for _ in range(tries):
         tries += 1
         # Get random row and slot
         r = randint(0, config.rows - 1)
@@ -15,7 +15,7 @@ def assignServer(solution: Solution, config: DataCenter, server: Server, tries=M
 
         # Check if server fits at slot s in row r
         for i in range(server.slots):
-            if (s + i >= config.slots):
+            if s + i >= config.slots:
                 valid = False
                 break
             if solution.dataCenter[r][s + i] != -1:  # -1 means available

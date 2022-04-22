@@ -17,9 +17,9 @@ class DataCenter:
     pools: int  # number of pools
     servers: List[Server]  # array with servers. len(servers) = number of servers
 
-    def getServer(self, id):
+    def get_server(self, server_id):
         for s in self.servers:
-            if s.id == id:
+            if s.id == server_id:
                 return s
 
 
@@ -32,9 +32,9 @@ class Solution:
         return Solution(self.pools.copy(), [row.copy() for row in self.dataCenter])
 
     def __eq__(self, other):
-        if (self.pools != other.pools):
+        if self.pools != other.pools:
             return False
-        if (self.dataCenter != other.dataCenter):
+        if self.dataCenter != other.dataCenter:
             return False
         return True
 

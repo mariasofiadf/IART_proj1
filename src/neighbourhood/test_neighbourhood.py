@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from data_center import Server, Solution
+from src.solution.data_center import Server, Solution
 
 from neighbourhood import assign_server_to_first_available_slot, unassign_server, move_server_inside_row, \
     move_server_to_different_pool, move_server_to_different_row
