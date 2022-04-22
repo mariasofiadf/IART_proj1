@@ -2,7 +2,6 @@ import random
 from enum import Enum
 
 import numpy as np
-
 from data_center import Solution, DataCenter, Server
 
 
@@ -52,7 +51,7 @@ def move_server_inside_row(solution: Solution, server: Server):
         for slot_no, slot in enumerate(row):
             if slot_no != old_slot and row[slot_no:slot_no + server.slots] == [-1] * server.slots:
                 solution.dataCenter[row_no][slot_no:slot_no +
-                                            server.slots] = [server.id] * server.slots
+                                                    server.slots] = [server.id] * server.slots
                 break  # Stop searching inside row
         else:
             return solution  # No other slot
@@ -83,7 +82,7 @@ def move_server_to_different_row(solution: Solution, server: Server):
     for slot_no in range(len(solution.dataCenter[new_row_no])):
         if solution.dataCenter[new_row_no][slot_no:slot_no + server.slots] == [-1] * server.slots:
             solution.dataCenter[new_row_no][slot_no:slot_no +
-                                            server.slots] = [server.id] * server.slots
+                                                    server.slots] = [server.id] * server.slots
             break
     else:
         return solution
@@ -110,7 +109,7 @@ def unassign_server(solution: Solution, server: Server):
         for slot_no, slot in enumerate(row):
             if slot == server.id:
                 solution.dataCenter[row_no][slot_no:slot_no +
-                                            server.slots] = [-1] * server.slots
+                                                    server.slots] = [-1] * server.slots
                 break  # Stop searching inside row
         else:
             continue  # Next row
@@ -125,7 +124,7 @@ def assign_server_to_first_available_slot(solution: Solution, server: Server):
         for slot_no in range(len(row)):
             if row[slot_no:slot_no + server.slots] == [-1] * server.slots:
                 solution.dataCenter[row_no][slot_no:slot_no +
-                                            server.slots] = [server.id] * server.slots
+                                                    server.slots] = [server.id] * server.slots
                 break  # Stop searching inside row
         else:
             continue  # Next row

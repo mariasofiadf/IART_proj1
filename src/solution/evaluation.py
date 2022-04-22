@@ -1,6 +1,5 @@
-import sys
-from data_center import DataCenter, Server, Solution
-import numpy as np
+from data_center import DataCenter, Solution
+
 
 def evaluate_solution(solution: Solution, data_center: DataCenter):
     capacities_per_pool = [0] * data_center.pools
