@@ -1,10 +1,7 @@
-from random import randint
-from data_center import DataCenter, Server, Solution
-from genetic import geneticAlgorithm
-from hill_climbing import hillClimbing
-from neighbourhood import Neighbourhood, neighbourhood
-from solution import randomSolution
-from evaluation import evaluate_solution
+from src.solution.data_center import DataCenter, Server
+from algorithms.genetic import geneticAlgorithm
+from src.neighbourhood.neighbourhood import Neighbourhood
+from src.solution.evaluation import evaluate_solution
 
 
 # Pools example [1,0,0,2,1] 

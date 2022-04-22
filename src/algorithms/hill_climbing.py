@@ -1,7 +1,7 @@
-from data_center import DataCenter, Solution
-from evaluation import evaluate_solution  
-from neighbourhood import neighbourhood
-from solution import randomSolution
+from src.solution.data_center import DataCenter
+from src.solution.evaluation import evaluate_solution
+from src.neighbourhood.neighbourhood import neighbourhood
+from src.solution.solution import randomSolution
 
 
 def hillClimbing(config: DataCenter, iterations: int, neighbourModes):

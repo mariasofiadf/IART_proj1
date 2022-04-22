@@ -1,8 +1,8 @@
-from data_center import DataCenter, Solution, Server
-from evaluation import evaluate_solution
-from neighbourhood import Neighbourhood, neighbourhood
-from solution import randomSolution
-from read import readDataCenter
+from src.solution.data_center import DataCenter, Server
+from src.solution.evaluation import evaluate_solution
+from src.neighbourhood.neighbourhood import Neighbourhood, neighbourhood
+from src.solution.solution import randomSolution
+from src.io.read import readDataCenter
 from math import exp
 from numpy.random import rand
 from matplotlib import pyplot
@@ -50,7 +50,7 @@ servers = [Server(0,3,10), Server(1,3,10), Server(2,2,5), Server(3,1,5), Server(
 rows = 2
 slots = 5
 pools = 2
-config = readDataCenter('problem.txt')
+config = readDataCenter('../../data/problem.txt')
 
 
 neighbourModes = [Neighbourhood.ADD_SV,Neighbourhood.RMV_SV,Neighbourhood.SWTCH_SV_POOL]

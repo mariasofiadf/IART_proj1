@@ -1,10 +1,8 @@
-
 from random import random, choices
-from django.urls import conf
-from data_center import DataCenter, Solution
-from evaluation import evaluate_solution
-from neighbourhood import assign_server_to_first_available_slot, neighbourhood
-from solution import randomSolution
+from src.solution.data_center import DataCenter, Solution
+from src.solution.evaluation import evaluate_solution
+from src.neighbourhood.neighbourhood import assign_server_to_first_available_slot, neighbourhood
+from src.solution.solution import randomSolution
 import sys
 
 def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, generations = 1000, mutationChance = 0.1, replacedEachGeneration = 100):

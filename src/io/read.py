@@ -1,8 +1,5 @@
-from cmath import pi
-from random import seed
-from typing import Tuple
-from data_center import Server, DataCenter, Solution
-from solution import randomSolution
+from src.solution.data_center import Server, DataCenter, Solution
+from src.solution.solution import randomSolution
 
 
 
@@ -43,9 +40,9 @@ def writeSolution(sol: Solution, file_name):
             f.write("X\n")
 
 
-dataCenter = readDataCenter("problem.txt")
+dataCenter = readDataCenter("../../data/problem.txt")
 print(dataCenter)
 sol1 = randomSolution(dataCenter)
 
 print(sol1)
-writeSolution(sol1,"solution.txt")
+writeSolution(sol1, "../../data/solution.txt")
