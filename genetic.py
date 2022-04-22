@@ -7,7 +7,7 @@ from neighbourhood import assign_server_to_first_available_slot, neighbourhood
 from solution import randomSolution
 import sys
 
-def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, generations = 100, mutationChance = 1, replacedEachGeneration = 100):
+def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, generations = 1000, mutationChance = 0.1, replacedEachGeneration = 100):
     # Get first generation
     population = []
     for i in range(populationSize):
@@ -17,7 +17,6 @@ def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, g
     bestSolution = population[0]
 
     for gen in range(generations):
-        print("Generation: ", gen)
         population = getOffspring(population, config, mutationChance,neighbourModes)
         # Get best solution
         for sol in population:
@@ -28,12 +27,16 @@ def geneticAlgorithm(config: DataCenter, neighbourModes, populationSize = 100, g
     return bestSolution
 
 
-def getOffspring(population, config, mutationChance,neighbourModes):
+def getOffspring(population, config, mutationChance, neighbourModes):
     populationValues = [evaluate_solution(sol,config) for sol in population]
     summ = sum(populationValues)+ sys.float_info.min # sum of evaluation of solutions
+
     roulette = [val/summ for val in populationValues]
     if(roulette.count(0) > len(roulette)-2):
         roulette = [summ/len(roulette) for r in roulette]
+    print(population)
+    print(roulette)
+        
     newPopulation = []
 
     popSize = len(population)
@@ -57,6 +60,11 @@ def reproduce(x: Solution, y: Solution, config: DataCenter):
     pools = x.pools[0:poolLength//2] + y.pools[poolLength//2::]
 
     dataCenter =[[-1 for r in range(len(x.dataCenter[0]))] for s in range(len(x.dataCenter))]
+
+    for r, row in enumerate(x.dataCenter):
+        for s, slot in enumerate(row):
+            if( slot == -2):
+                dataCenter[r][s] = slot
 
     for r, row in enumerate(x.dataCenter):
         

@@ -29,7 +29,7 @@ dataCenter = [[]]
 #     pools: int # number of pools
 #     servers: array[int] #array with server sizes. len(servers) = number of servers
 
-unavailable = [(0,0)]
+unavailable = [(0,0),(0,4)]
 servers = [Server(0,3,10), Server(1,3,10), Server(2,2,5), Server(3,1,5), Server(4,1,1)]
 rows = 2
 slots = 5
@@ -39,7 +39,7 @@ config = DataCenter(rows,slots,unavailable,pools,servers)
 
 neighbourModes = [Neighbourhood.ADD_SV,Neighbourhood.RMV_SV,Neighbourhood.SWTCH_SV_POOL,Neighbourhood.MOV_SV_SLOT, Neighbourhood.SWTCH_SV_ROW]
 
-solution = geneticAlgorithm(config,neighbourModes,100)
+solution = geneticAlgorithm(config,neighbourModes,4,1)
 #solution = hillClimbing(config,500,neighbourModes)
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)
