@@ -1,7 +1,10 @@
 from random import randint
 from dataCenter import DataCenter, Server, Solution
+from genetic import geneticAlgorithm
+from hillClimbing import hillClimbing
+from neighbourhood import Neighbourhood, neighbourhood
 from solution import randomSolution
-from evaluation import evaluate
+from evaluation import evaluate_solution
 
 
 # Pools example [1,0,0,2,1] 
@@ -26,18 +29,21 @@ dataCenter = [[]]
 #     pools: int # number of pools
 #     servers: array[int] #array with server sizes. len(servers) = number of servers
 
-unavailable = [(0,0)]
-servers = [Server(3,10), Server(3,10), Server(2,5), Server(1,5), Server(1,1)]
+unavailable = [(0,0),(0,4)]
+servers = [Server(0,3,10), Server(1,3,10), Server(2,2,5), Server(3,1,5), Server(4,1,1)]
 rows = 2
 slots = 5
 pools = 2
 config = DataCenter(rows,slots,unavailable,pools,servers)
 
 
-solution = randomSolution(config)
+neighbourModes = [Neighbourhood.ADD_SV,Neighbourhood.RMV_SV,Neighbourhood.SWTCH_SV_POOL,Neighbourhood.MOV_SV_SLOT, Neighbourhood.SWTCH_SV_ROW]
 
+solution = geneticAlgorithm(config,neighbourModes,4,1)
+#solution = hillClimbing(config,500,neighbourModes)
 print("Pools: ", solution.pools)
 print("DataCenter: ", solution.dataCenter)
 
-print(evaluate(solution, config))
+print("Evaluation: ", evaluate_solution(solution, config))
+
 
