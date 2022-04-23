@@ -10,6 +10,9 @@ from src.solution.data_center import Solution
 if __name__ == '__main__':
     if len(sys.argv) <= 3:
         print("Usage: python main.py <input_file> <options>")
+        print("Usage: python main.py <input_file> hillclimbing <iterations>")
+        print("Usage: python main.py <input_file> genetic <generations> <mutation> <replaced_each_gen>")
+        print("Usage: python main.py <input_file> simulatedannealing <iterations> <initial_temperature> <temperature_mode>")
         exit(1)
 
     input_file = sys.argv[1]
@@ -25,17 +28,17 @@ if __name__ == '__main__':
     sol: Solution = None
     idk: int = None
 
-    if algorithm == 'genetic':
+    if algorithm == 'genetic' or algorithm == 'gen':
         population_size = int(sys.argv[3])
         generations = int(sys.argv[4])
         mutation_chance = float(sys.argv[5])
         replaced_each_generation = int(sys.argv[6])
         sol = genetic(data_center, neighbour_modes, population_size, generations, mutation_chance,
                       replaced_each_generation)
-    elif algorithm == 'hillclimbing':
+    elif algorithm == 'hillclimbing' or algorithm == 'hc':
         iterations = int(sys.argv[3])
         sol = hill_climbing(data_center, iterations, neighbour_modes)
-    elif algorithm == 'simulatedannealing':
+    elif algorithm == 'simulatedannealing' or algorithm == "sa":
         iterations = int(sys.argv[3])
         initial_temperature = float(sys.argv[4])
         temperature_mode = sys.argv[5]
@@ -44,7 +47,7 @@ if __name__ == '__main__':
         print("Unknown algorithm")
         exit(1)
 
-    write_solution(sol, "/data/solution.txt")
+    write_solution(sol, "data/solution.txt")
 
     # pyplot.plot(it_list, evaluations)
     # pyplot.ylabel('Evaluation')
