@@ -1,15 +1,16 @@
-from dataCenter import DataCenter, Solution, Server
-from evaluation import evaluate_solution
-from neighbourhood import Neighbourhood, neighbourhood
-from solution import randomSolution
-from read import readDataCenter
 from math import exp
+
+from numpy.random import rand
+
+from src.neighbourhood.neighbourhood import neighbourhood
+from src.solution.data_center import DataCenter, Solution
+from src.solution.evaluation import evaluate_solution
+from src.solution.solution import random_solution
+
 from numpy.random import rand
 from matplotlib import pyplot
 
-from solution import randomSolution
-
-def simulatedAnnealing(config: DataCenter, iterations: int, neighbourModes, init_temp, temp_mode, solution: Solution):
+def simulated_annealing(config: DataCenter, iterations: int, neighbourModes, init_temp, temp_mode, solution: Solution):
     evaluations = list()
     #initial point
     best = solution
