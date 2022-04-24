@@ -8,7 +8,7 @@ from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 
-def simulated_annealing(config: DataCenter, iterations: int, init_temp, temp_mode, evaluations=None,
+def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule_function, evaluations=None,
                         it_list=None):
     if evaluations is None:
         evaluations = []
@@ -22,10 +22,7 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, temp_mod
 
     temp = init_temp
     for i in range(iterations - 1):
-        if temp_mode == 'linear':
-            temp -= init_temp / iterations
-        else:
-            temp /= 1.05
+        temp = schedule_function(init_temp, iterations, temp)
         # new solution
         new_sol = get_random_neighbour(curr, config)
         new_sol_eval = evaluate_solution(new_sol, config)
@@ -44,3 +41,11 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, temp_mod
         evaluations.append(curr_eval)
         it_list.append(i)
     return [best, best_eval]
+
+
+def non_linear_schedule(init_temp, iterations, temp):
+    return temp / 1.05
+
+
+def linear_schedule(init_temp, iterations, temp):
+    return temp - init_temp / iterations
