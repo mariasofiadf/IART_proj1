@@ -45,7 +45,9 @@ def get_new_population(population, config, mutation_chance, neighbour_modes,repl
 
     popSize = len(population)
 
-
+    while len(newPopulation) < (popSize - replaced_each_generation*popSize):
+        x = (choices(population, roulette))[0]
+        newPopulation.append(x)
 
 
     # While the population is not complete, get parents (using roulette method) and reproduce
