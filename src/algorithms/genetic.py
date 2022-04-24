@@ -7,7 +7,7 @@ from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 
-def genetic(config: DataCenter, neighbour_modes, population_size=100, generations=1000, mutation_chance=0.1,
+def genetic(config: DataCenter, population_size=100, generations=1000, mutation_chance=0.1,
             replaced_each_generation=100):
     # Get first generation
     population = []
@@ -19,7 +19,7 @@ def genetic(config: DataCenter, neighbour_modes, population_size=100, generation
 
     # Generate generations
     for gen in range(generations):
-        population = get_offspring(population, config, mutation_chance, neighbour_modes)
+        population = get_offspring(population, config, mutation_chance)
 
         # Get best solution of current population
         for sol in population:
@@ -29,7 +29,7 @@ def genetic(config: DataCenter, neighbour_modes, population_size=100, generation
     return bestSolution
 
 
-def get_offspring(population, config, mutation_chance, neighbour_modes):
+def get_offspring(population, config, mutation_chance):
     populationValues = [evaluate_solution(sol, config) for sol in population]
     summ = sum(populationValues) + sys.float_info.min  # sum of evaluation of solutions
 
@@ -59,7 +59,7 @@ def get_offspring(population, config, mutation_chance, neighbour_modes):
 
         # Mutate if necessary
         if r < mutation_chance:
-            child = get_random_neighbour(child, neighbour_modes, config)
+            child = get_random_neighbour(child, config)
 
         # Add child to population
         newPopulation.append(child)

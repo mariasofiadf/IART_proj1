@@ -8,7 +8,7 @@ from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 
-def simulated_annealing(config: DataCenter, iterations: int, neighbour_modes, init_temp, temp_mode, evaluations=None,
+def simulated_annealing(config: DataCenter, iterations: int, init_temp, temp_mode, evaluations=None,
                         it_list=None):
     if evaluations is None:
         evaluations = []
@@ -27,7 +27,7 @@ def simulated_annealing(config: DataCenter, iterations: int, neighbour_modes, in
         else:
             temp /= 1.05
         # new solution
-        new_sol = get_random_neighbour(curr, neighbour_modes, config)
+        new_sol = get_random_neighbour(curr, config)
         new_sol_eval = evaluate_solution(new_sol, config)
         if new_sol_eval > best_eval:
             best = new_sol
