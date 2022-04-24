@@ -16,6 +16,21 @@ def hill_climbing_steepest_ascent(config: DataCenter, iterations: int):
             break
     return solution
 
+
+def hill_climbing_basic(config: DataCenter, iterations: int, neighbour_modes):
+    solution = random_solution(config)
+    for i in range(iterations):
+        better_neighbour = solution
+        for _ in range(iterations):
+            newSolution = get_random_neighbour(solution, neighbour_modes, config)
+            if evaluate_solution(newSolution, config) > evaluate_solution(better_neighbour, config):
+                better_neighbour = newSolution
+                break
+        print('>%d f(%s) => %.5f' % (i, better_neighbour, evaluate_solution(better_neighbour, config)))
+        solution = better_neighbour
+    return solution
+
+
 def hill_climbing(config: DataCenter, iterations: int, neighbour_modes):
     solution = random_solution(config)
     for i in range(iterations):
