@@ -1,7 +1,7 @@
 import sys
 
 from src.algorithms.genetic import genetic
-from src.algorithms.hill_climbing import hill_climbing
+from src.algorithms.hill_climbing import hill_climbing_basic_random
 from src.algorithms.simulated_annealing import simulated_annealing
 from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
@@ -37,7 +37,7 @@ if __name__ == '__main__':
                       replaced_each_generation)
     elif algorithm == 'hillclimbing' or algorithm == 'hc':
         iterations = int(sys.argv[3])
-        sol = hill_climbing(data_center, iterations, neighbour_modes)
+        sol = hill_climbing_basic_random(data_center, iterations, neighbour_modes)
     elif algorithm == 'simulatedannealing' or algorithm == "sa":
         iterations = int(sys.argv[3])
         initial_temperature = float(sys.argv[4])

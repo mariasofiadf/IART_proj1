@@ -31,7 +31,7 @@ def hill_climbing_basic(config: DataCenter, iterations: int, neighbour_modes):
     return solution
 
 
-def hill_climbing(config: DataCenter, iterations: int, neighbour_modes):
+def hill_climbing_basic_random(config: DataCenter, iterations: int, neighbour_modes):
     solution = random_solution(config)
     for i in range(iterations):
         newSolution = get_random_neighbour(solution, neighbour_modes, config)
