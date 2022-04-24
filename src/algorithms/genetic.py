@@ -1,7 +1,7 @@
 import sys
 from random import random, choices
 
-from src.neighbourhood.neighbourhood import assign_server_to_first_available_slot, neighbourhood
+from src.neighbourhood.neighbourhood import assign_server_to_first_available_slot, get_random_neighbour
 from src.solution.data_center import DataCenter, Solution
 from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
@@ -59,7 +59,7 @@ def get_offspring(population, config, mutation_chance, neighbour_modes):
 
         # Mutate if necessary
         if r < mutation_chance:
-            child = neighbourhood(child, neighbour_modes, config)
+            child = get_random_neighbour(child, neighbour_modes, config)
 
         # Add child to population
         newPopulation.append(child)

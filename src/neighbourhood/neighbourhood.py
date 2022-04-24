@@ -14,7 +14,7 @@ class Neighbourhood(Enum):
     SWTCH_SV_POOL = 4
 
 
-def neighbourhood(solution: Solution, modes: [Neighbourhood], config: DataCenter):
+def get_random_neighbour(solution: Solution, modes: [Neighbourhood], config: DataCenter):
     solution_copy = solution.deepcopy()
     mode = random.choice(modes)
 
