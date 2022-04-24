@@ -53,11 +53,6 @@ def get_neighbours(solution: Solution, config: DataCenter):
             neighbours.append(sol)
     for server_no in allocated_server_nos:
         solution_copy = solution.deepcopy()
-        sol = unassign_server(solution_copy, config.servers[server_no])
-        if sol != solution:
-            neighbours.append(sol)
-    for server_no in allocated_server_nos:
-        solution_copy = solution.deepcopy()
         sol = move_server_inside_row(solution_copy, config.servers[server_no])
         if sol != solution:
             neighbours.append(sol)
@@ -69,6 +64,11 @@ def get_neighbours(solution: Solution, config: DataCenter):
     for server_no in allocated_server_nos:
         solution_copy = solution.deepcopy()
         sol = move_server_to_different_pool(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    for server_no in allocated_server_nos:
+        solution_copy = solution.deepcopy()
+        sol = unassign_server(solution_copy, config.servers[server_no])
         if sol != solution:
             neighbours.append(sol)
     return neighbours
