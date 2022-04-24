@@ -16,26 +16,27 @@ RUNS = 1
 
 
 def timed_genetic(data_center, iterations, neighbour_modes, initial_solution, population_size, mutation_chance, replaced_each_generation, i, res):
-    print("Starting Genetic nº", i)
+
     sol_GA = [0,0]
     for run in range(RUNS):
+        print(f"Starting Genetic nº{i} run nº{run}")
         start_time = time.time()
         temp_GA, y_axis_GA = genetic(data_center, initial_solution, neighbour_modes, iterations, population_size, mutation_chance, replaced_each_generation)
         sol_GA[0] += evaluate_solution(temp_GA,data_center)
         sol_GA[1] += time.time()-start_time
-    print("Finished Genetic nº", i)
+        print(f"Finished Genetic nº{i} run nº{run}")
     res.put([sol_GA,y_axis_GA, i])
 
 def timed_hill_climbing(data_center,iterations, initial_solution,i,res):
-    print("Starting Hill Climbing")
     sol_HC = [0,0]
 
     for run in range(RUNS):
+        print(f"Starting Hill Climbing nº{i} run nº{run}")
         start_time = time.time()
         temp_HC, y_axis_HC = hill_climbing_basic(data_center, iterations, initial_solution)
-        sol_HC[0] = evaluate_solution(temp_HC,data_center)
-        sol_HC[1] = time.time()-start_time
-    print("Finished Hill Climbing")
+        sol_HC[0] += evaluate_solution(temp_HC,data_center)
+        sol_HC[1] += time.time()-start_time
+        print(f"Finished Hill Climbing nº{i} run nª{run}")
     res.put([sol_HC,y_axis_HC,i])
 
 
