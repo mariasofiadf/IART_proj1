@@ -16,7 +16,7 @@ class Neighbourhood(Enum):
 
 def get_random_neighbour(solution: Solution, config: DataCenter):
     solution_copy = solution.deepcopy()
-    mode = random.choice(Neighbourhood)
+    mode = random.choice(list(Neighbourhood))
 
     allocated_server_nos = [x for x in set(
         np.array(solution_copy.dataCenter).flatten()) if x >= 0]
