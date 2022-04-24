@@ -1,5 +1,7 @@
 import sys
 from matplotlib import pyplot
+from src.algorithms.simulated_annealing import linear_schedule, simulated_annealing
+from src.algorithms.tabu import tabu_search
 from src.algorithms.hill_climbing import hill_climbing_basic
 from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
@@ -120,3 +122,27 @@ def plot_genetic(data_center, iterations, neighbour_modes):
 
 
 
+
+def plot_all(data_center, iterations, initial_solution, neighbour_modes):
+    print("Hill Climb")
+    sol_HC, y_axis_HC = hill_climbing_basic(data_center, iterations, initial_solution)
+    print("Genetic")
+    sol_GA, y_axis_GA = genetic(data_center, initial_solution, neighbour_modes, iterations, 100, 1,1)
+    print("Simulated Annealing")
+    sol_SA, y_axis_SA = simulated_annealing(data_center, iterations, 100, linear_schedule)
+    print("Tabu Search")
+    sol_TS, y_axis_TS = tabu_search(data_center,iterations,neighbour_modes,10)
+    x_axis = list(range(1, iterations))
+    while(len(y_axis_HC) > len(y_axis_TS)):
+        y_axis_TS.append(y_axis_TS[-1])
+
+    pyplot.plot(x_axis, y_axis_HC, color = 'red')
+    pyplot.plot(x_axis, y_axis_SA)
+    pyplot.plot(x_axis, y_axis_GA, color = 'green')
+    pyplot.plot(x_axis, y_axis_TS, color = 'orange')
+    pyplot.legend(['Hill Climbing','Simulated Annealing', 'Genetic','Tabu Search'])
+    pyplot.ylabel('Evaluation')
+    pyplot.xlabel('Iteration')
+    pyplot.savefig('plots/all.png')
+    pyplot.show()
+    pyplot.clf()
