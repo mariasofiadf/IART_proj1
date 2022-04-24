@@ -31,6 +31,9 @@ class Solution:
     def deepcopy(self):
         return Solution(self.pools.copy(), [row.copy() for row in self.dataCenter])
 
+    def __hash__(self):
+        return hash(tuple([tuple(sl) for sl in self.dataCenter])) ^ hash(tuple(self.pools))
+
     def __eq__(self, other):
         if self.pools != other.pools:
             return False
