@@ -1,5 +1,6 @@
 import sys
 from matplotlib import pyplot
+from src.algorithms.hill_climbing import hill_climbing_basic
 from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
 from src.neighbourhood.neighbourhood import Neighbourhood
@@ -16,7 +17,7 @@ def timed_genetic(data_center, iterations, neighbour_modes, initial_solution, po
     print("Starting Genetic nº", i)
     sol_GA = [0,0]
     start_time = time.time()
-    temp_GA, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, population_size, mutation_chance, replaced_each_generation)
+    temp_GA, _ = genetic(data_center, initial_solution, neighbour_modes, iterations, population_size, mutation_chance, replaced_each_generation)
     sol_GA[0] += evaluate_solution(temp_GA,data_center)
     sol_GA[1] += time.time()-start_time
     print("Finished Genetic nº", i)
@@ -29,7 +30,7 @@ def plot_genetic(data_center, iterations, neighbour_modes):
 
     sol_HC = [0,0]
     start_time = time.time()
-    temp_HC, _ = hill_climbing(data_center, iterations, neighbour_modes, initial_solution)
+    temp_HC, _ = hill_climbing_basic(data_center, iterations, initial_solution)
     sol_HC[0] = evaluate_solution(temp_HC,data_center)
     sol_HC[1] = time.time()-start_time
     ga_values[0] = sol_HC

@@ -14,9 +14,9 @@ class Neighbourhood(Enum):
     SWTCH_SV_POOL = 4
 
 
-def neighbourhood(solution: Solution, modes: [Neighbourhood], config: DataCenter):
+def get_random_neighbour(solution: Solution, config: DataCenter):
     solution_copy = solution.deepcopy()
-    mode = random.choice(modes)
+    mode = random.choice(list(Neighbourhood))
 
     allocated_server_nos = [x for x in set(
         np.array(solution_copy.dataCenter).flatten()) if x >= 0]
@@ -37,6 +37,41 @@ def neighbourhood(solution: Solution, modes: [Neighbourhood], config: DataCenter
         elif mode == Neighbourhood.SWTCH_SV_POOL:
             return move_server_to_different_pool(solution_copy, config.servers[server_no])
     return solution
+
+
+def get_neighbours(solution: Solution, config: DataCenter):
+    solution_copy = solution.deepcopy()
+    allocated_server_nos = [x for x in set(
+        np.array(solution_copy.dataCenter).flatten()) if x >= 0]
+    unallocated_servers_nos = [i for i in range(
+        len(config.servers)) if i not in allocated_server_nos]
+    neighbours = []
+    for server_no in unallocated_servers_nos:
+        solution_copy = solution.deepcopy()
+        sol = assign_server_to_first_available_slot(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    for server_no in allocated_server_nos:
+        solution_copy = solution.deepcopy()
+        sol = move_server_inside_row(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    for server_no in allocated_server_nos:
+        solution_copy = solution.deepcopy()
+        sol = move_server_to_different_row(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    for server_no in allocated_server_nos:
+        solution_copy = solution.deepcopy()
+        sol = move_server_to_different_pool(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    for server_no in allocated_server_nos:
+        solution_copy = solution.deepcopy()
+        sol = unassign_server(solution_copy, config.servers[server_no])
+        if sol != solution:
+            neighbours.append(sol)
+    return neighbours
 
 
 def move_server_inside_row(solution: Solution, server: Server):

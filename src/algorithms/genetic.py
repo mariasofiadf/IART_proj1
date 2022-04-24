@@ -1,14 +1,14 @@
 import sys
 from random import random, choices
 
-from src.neighbourhood.neighbourhood import assign_server_to_first_available_slot, neighbourhood
+from src.neighbourhood.neighbourhood import assign_server_to_first_available_slot, get_random_neighbour
 from src.solution.data_center import DataCenter, Solution
 from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 
-def genetic(config: DataCenter, generations, neighbour_modes, solution: Solution, population_size=100, mutation_chance=1,
-            replaced_each_generation=0.5):
+def genetic(config: DataCenter, solution: Solution, neighbour_modes,generations, population_size=100, mutation_chance=1,
+            replaced_each_generation=1):
     evaluations = list()
     # Get first generation
     population = []
@@ -67,7 +67,7 @@ def get_new_population(population, config, mutation_chance, neighbour_modes,repl
 
         # Mutate if necessary
         if r < mutation_chance:
-            child = neighbourhood(child, neighbour_modes, config)
+            child = get_random_neighbour(child, config)
 
         # Add child to population
         newPopulation.append(child)

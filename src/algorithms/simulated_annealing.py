@@ -2,29 +2,31 @@ from math import exp
 
 from numpy.random import rand
 
-from src.neighbourhood.neighbourhood import neighbourhood
-from src.solution.data_center import DataCenter, Solution
+from src.neighbourhood.neighbourhood import get_random_neighbour
+from src.solution.data_center import DataCenter
 from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 from numpy.random import rand
 from matplotlib import pyplot
 
-def simulated_annealing(config: DataCenter, iterations: int, neighbourModes, init_temp, temp_mode, solution: Solution):
-    evaluations = list()
-    #initial point
-    best = solution
+def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule_function, evaluations=None,
+                        it_list=None):
+    if evaluations is None:
+        evaluations = []
+    if it_list is None:
+        it_list = []
+
+    # initial point
+    best = random_solution(config)
     best_eval = evaluate_solution(best, config)
     curr, curr_eval = best, best_eval
     
     temp = init_temp
-    for i in range (iterations - 1):
-        if(temp_mode == 'linear'):
-            temp -=  init_temp/iterations
-        else:
-            temp/= 1.05
-        #new solution
-        new_sol = neighbourhood(curr,neighbourModes,config)
+    for i in range(iterations - 1):
+        temp = schedule_function(init_temp, iterations, temp)
+        # new solution
+        new_sol = get_random_neighbour(curr, config)
         new_sol_eval = evaluate_solution(new_sol, config)
         if(new_sol_eval > best_eval):
             best = new_sol
@@ -40,8 +42,13 @@ def simulated_annealing(config: DataCenter, iterations: int, neighbourModes, ini
             curr, curr_eval = new_sol, new_sol_eval  
 
         evaluations.append(curr_eval)
+        it_list.append(i)
+    return best, evaluations
 
-    return [best, evaluations]
+
+def non_linear_schedule(init_temp, iterations, temp):
+    return temp / 1.05
 
 
-
+def linear_schedule(init_temp, iterations, temp):
+    return temp - init_temp / iterations
