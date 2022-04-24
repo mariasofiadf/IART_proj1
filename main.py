@@ -1,6 +1,6 @@
 import sys
 from matplotlib import pyplot
-from graphs import plot_genetic
+from graphs import plot_all, plot_genetic
 from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
 from src.algorithms.hill_climbing import hill_climbing_basic_random, hill_climbing_basic, hill_climbing_steepest_ascent
@@ -75,32 +75,12 @@ if __name__ == '__main__':
         iterations = int(sys.argv[3])
         max_tenure = int(sys.argv[4])
         sol = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
-        print(sol)
-        print(evaluate_solution(sol, data_center))
     elif algorithm == 'all':
-
-        sol_HC, y_axis_HC = hill_climbing_basic(data_center, iterations, initial_solution)
-        sol_GA, y_axis_GA = genetic(data_center, initial_solution, neighbour_modes, iterations, 100, 1,1)
-        sol_SA, y_axis_SA = simulated_annealing(data_center, iterations, 100, linear_schedule)
-        x_axis = list(range(1, iterations))
-
-        print(len(y_axis_HC))
-
-        print(len(y_axis_GA))
-        print(len(y_axis_SA))
-        pyplot.plot(x_axis, y_axis_HC, color = 'red')
-        pyplot.plot(x_axis, y_axis_SA)
-        pyplot.plot(x_axis, y_axis_GA, color = 'green')
-        pyplot.legend(['Hill Climbing','Simulated Annealing', 'Genetic'])
-        pyplot.ylabel('Evaluation')
-        pyplot.xlabel('Iteration')
-        pyplot.savefig('plots/all.png')
-        pyplot.clf()
+        plot_all(data_center,iterations,initial_solution,neighbour_modes)
         exit()
     elif algorithm == 'plotgenetic':
         plot_genetic(data_center,iterations,neighbour_modes)
         exit()
-
     else:
         print("Unknown algorithm")
         exit()
