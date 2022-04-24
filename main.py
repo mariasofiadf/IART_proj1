@@ -5,12 +5,14 @@ from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
 from src.algorithms.hill_climbing import hill_climbing_basic_random, hill_climbing_basic, hill_climbing_steepest_ascent
 from src.algorithms.simulated_annealing import simulated_annealing, linear_schedule, non_linear_schedule
+from src.algorithms.tabu import tabu_search
 from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
 from src.solution.data_center import Solution
+from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
-import numpy as np 
+import numpy as np
 import time
 
 from multiprocessing import Process as worker, Queue
@@ -69,14 +71,19 @@ if __name__ == '__main__':
             sol, _ = simulated_annealing(data_center, iterations, initial_temperature, linear_schedule)
         else:
             sol, _ = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
-            
+    elif algorithm == 'tabu':
+        iterations = int(sys.argv[3])
+        max_tenure = int(sys.argv[4])
+        sol = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
+        print(sol)
+        print(evaluate_solution(sol, data_center))
     elif algorithm == 'all':
 
         sol_HC, y_axis_HC = hill_climbing_basic(data_center, iterations, initial_solution)
         sol_GA, y_axis_GA = genetic(data_center, initial_solution, neighbour_modes, iterations, 100, 1,1)
         sol_SA, y_axis_SA = simulated_annealing(data_center, iterations, 100, linear_schedule)
         x_axis = list(range(1, iterations))
-        
+
         print(len(y_axis_HC))
 
         print(len(y_axis_GA))
