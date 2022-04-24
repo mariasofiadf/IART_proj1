@@ -11,51 +11,68 @@ from src.solution.solution import random_solution
 
 import numpy as np 
 import time
+from threading import Thread
+
+ga_values = [[0,0] for x in range(7)]
+
+def timed_genetic(data_center, iterations, neighbour_modes, initial_solution, population_size, mutation_chance, replaced_each_generation, i):
+    print("Starting Genetic nº", i)
+    sol_GA = [0,0]
+    start_time = time.time()
+    temp_GA, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, population_size, mutation_chance, replaced_each_generation)
+    sol_GA[0] += evaluate_solution(temp_GA,data_center)
+    sol_GA[1] += time.time()-start_time
+    ga_values[i] = sol_GA
+    print("Finished Genetic", i)
 
 def plot_genetic(data_center, iterations, neighbour_modes):
     runs = 1
-    sol_HC, sol_GA1, sol_GA2, sol_GA3, sol_GA4, sol_GA5, sol_GA6 = [0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]
+    initial_solution = random_solution(data_center)
 
-    for i in range(runs):
-        initial_solution = random_solution(data_center)
-        start_time = time.time()
-        temp_HC, _ = hill_climbing(data_center, iterations, neighbour_modes, initial_solution)
-        sol_HC[0] += evaluate_solution(temp_HC,data_center)
-        sol_HC[1] += time.time()-start_time
+    sol_HC = [0,0]
+    start_time = time.time()
+    temp_HC, _ = hill_climbing(data_center, iterations, neighbour_modes, initial_solution)
+    sol_HC[0] = evaluate_solution(temp_HC,data_center)
+    sol_HC[1] = time.time()-start_time
+    ga_values[0] = sol_HC
 
-        start_time = time.time()
-        temp_GA1, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=1, replaced_each_generation=1)
-        sol_GA1[0] += evaluate_solution(temp_GA1,data_center)
-        sol_GA1[1] += time.time()-start_time
+    population_size = 80
+    threads = []
 
-        start_time = time.time()
-        temp_GA2, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=0.1,replaced_each_generation = 1)
-        sol_GA2[0] += evaluate_solution(temp_GA2,data_center)
-        sol_GA2[1] += time.time()-start_time
+    iterations = iterations
 
-        start_time = time.time()
-        temp_GA3, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=0.01,replaced_each_generation = 1)
-        sol_GA3[0] += evaluate_solution(temp_GA3,data_center)
-        sol_GA3[1] += time.time()-start_time
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 1, 1,1])
+    process.start()
+    threads.append(process)
 
-        start_time = time.time()
-        temp_GA4, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=1, replaced_each_generation=0.5)
-        sol_GA4[0] += evaluate_solution(temp_GA4,data_center)
-        sol_GA4[1] += time.time()-start_time
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 0.1, 1,2])
+    process.start()
+    threads.append(process)
 
-        start_time = time.time()
-        temp_GA5, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=0.1,replaced_each_generation = 0.5)
-        sol_GA5[0] += evaluate_solution(temp_GA5,data_center)
-        sol_GA5[1] += time.time()-start_time
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 0.01, 1,3])
+    process.start()
+    threads.append(process)
 
-        start_time = time.time()
-        temp_GA6, _ = genetic(data_center, iterations, neighbour_modes, initial_solution, 100, mutation_chance=0.01,replaced_each_generation = 0.5)
-        sol_GA6[0] += evaluate_solution(temp_GA6,data_center)
-        sol_GA6[1] += time.time()-start_time
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 1, 0.5,4])
+    process.start()
+    threads.append(process)
 
-    values = [sol_HC,sol_GA1,sol_GA2,sol_GA3,sol_GA4,sol_GA5,sol_GA6]
-    evaluations = [v[0]/runs for v in values]
-    times = [v[1]/runs*10 for v in values]
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 0.1, 0.5,5])
+    process.start()
+    threads.append(process)
+
+    process = Thread(target=timed_genetic, args=[data_center, iterations,neighbour_modes, initial_solution, population_size, 0.01, 0.5,6])
+    process.start()
+    threads.append(process)
+
+    # We now pause execution on the main thread by 'joining' all of our started threads.
+    # This ensures that each has finished processing the urls.
+    for process in threads:
+        process.join()
+
+    print(ga_values)
+    evaluations = [v[0]/runs for v in ga_values]
+    times = [v[1]/runs for v in ga_values]
     algorithms = ["Hill\nClimbing", 
     "100% MUT\n100% REG",
     '10% MUT\n100% REG',
@@ -67,7 +84,7 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     x_axis = np.arange(len(algorithms))
     pyplot.figure(figsize=(8, 5))
     pyplot.bar(x_axis - 0.2, evaluations,width=0.4,color='red', label='value')
-    pyplot.bar(x_axis + 0.2, times,width=0.4, color = 'pink', label='time (deciseconds)')
+    pyplot.bar(x_axis + 0.2, times,width=0.4, color = 'pink', label='time')
     pyplot.legend()
     pyplot.xticks(x_axis, algorithms)
     pyplot.title('Genetic Algorithm')
