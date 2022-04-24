@@ -2,7 +2,7 @@ import sys
 
 from src.algorithms.genetic import genetic
 from src.algorithms.hill_climbing import hill_climbing_basic_random, hill_climbing_basic, hill_climbing_steepest_ascent
-from src.algorithms.simulated_annealing import simulated_annealing
+from src.algorithms.simulated_annealing import simulated_annealing, linear_schedule, non_linear_schedule
 from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
 from src.solution.data_center import Solution
@@ -14,7 +14,8 @@ if __name__ == '__main__':
         print("Usage: python main.py <input_file> hillclimbing_basic_random <iterations>")
         print("Usage: python main.py <input_file> hillclimbing_steepest_ascent <iterations>")
         print("Usage: python main.py <input_file> genetic <generations> <mutation> <replaced_each_gen>")
-        print("Usage: python main.py <input_file> simulatedannealing <iterations> <initial_temperature> <temperature_mode>")
+        print(
+            "Usage: python main.py <input_file> simulatedannealing <iterations> <initial_temperature> <temperature_mode>")
         exit(1)
 
     input_file = sys.argv[1]
@@ -50,7 +51,10 @@ if __name__ == '__main__':
         iterations = int(sys.argv[3])
         initial_temperature = float(sys.argv[4])
         temperature_mode = sys.argv[5]
-        sol, idk = simulated_annealing(data_center, iterations, initial_temperature, temperature_mode)
+        if temperature_mode == 'linear':
+            sol, idk = simulated_annealing(data_center, iterations, initial_temperature, linear_schedule)
+        else:
+            sol, idk = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
     else:
         print("Unknown algorithm")
         exit(1)
