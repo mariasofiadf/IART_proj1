@@ -3,19 +3,15 @@ import sys
 from src.algorithms.genetic import genetic
 from src.algorithms.hill_climbing import hill_climbing_basic_random, hill_climbing_basic, hill_climbing_steepest_ascent
 from src.algorithms.simulated_annealing import simulated_annealing, linear_schedule, non_linear_schedule
+from src.algorithms.tabu import tabu_search
 from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
 from src.solution.data_center import Solution
+from src.solution.evaluation import evaluate_solution
 
 if __name__ == '__main__':
     if len(sys.argv) <= 3:
         print("Usage: python main.py <input_file> <options>")
-        print("Usage: python main.py <input_file> hillclimbing_basic <iterations>")
-        print("Usage: python main.py <input_file> hillclimbing_basic_random <iterations>")
-        print("Usage: python main.py <input_file> hillclimbing_steepest_ascent <iterations>")
-        print("Usage: python main.py <input_file> genetic <generations> <mutation> <replaced_each_gen>")
-        print(
-            "Usage: python main.py <input_file> simulatedannealing <iterations> <initial_temperature> <temperature_mode>")
         exit(1)
 
     input_file = sys.argv[1]
@@ -55,6 +51,11 @@ if __name__ == '__main__':
             sol, idk = simulated_annealing(data_center, iterations, initial_temperature, linear_schedule)
         else:
             sol, idk = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
+    elif algorithm == 'tabu':
+        iterations = int(sys.argv[3])
+        max_tenure = int(sys.argv[4])
+        sol = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
+        print(evaluate_solution(sol, data_center))
     else:
         print("Unknown algorithm")
         exit(1)
