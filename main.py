@@ -76,11 +76,7 @@ if __name__ == '__main__':
         sol_GA, y_axis_GA = genetic(data_center, initial_solution, neighbour_modes, iterations, 100, 1,1)
         sol_SA, y_axis_SA = simulated_annealing(data_center, iterations, 100, linear_schedule)
         x_axis = list(range(1, iterations))
-        
-        print(len(y_axis_HC))
-
-        print(len(y_axis_GA))
-        print(len(y_axis_SA))
+    
         pyplot.plot(x_axis, y_axis_HC, color = 'red')
         pyplot.plot(x_axis, y_axis_SA)
         pyplot.plot(x_axis, y_axis_GA, color = 'green')
@@ -88,6 +84,7 @@ if __name__ == '__main__':
         pyplot.ylabel('Evaluation')
         pyplot.xlabel('Iteration')
         pyplot.savefig('plots/all.png')
+        pyplot.show()
         pyplot.clf()
         exit()
     elif algorithm == 'plotgenetic':

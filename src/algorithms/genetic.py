@@ -21,13 +21,11 @@ def genetic(config: DataCenter, solution: Solution, neighbour_modes,generations,
     # Generate generations
     for gen in range(generations -1):
         population = get_new_population(population, config, mutation_chance, neighbour_modes, replaced_each_generation)
-        currBest = population[0]
         # Get best solution of current population
         for sol in population:
             if evaluate_solution(sol, config) > evaluate_solution(bestSolution, config):
                 bestSolution = sol
-                currBest  = sol
-        evaluations.append(evaluate_solution(currBest,config))
+        evaluations.append(evaluate_solution(bestSolution,config))
 
     return bestSolution, evaluations
 
