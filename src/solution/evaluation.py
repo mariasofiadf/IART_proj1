@@ -5,6 +5,7 @@ def evaluate_solution(solution: Solution, data_center: DataCenter):
     capacities_per_pool = [0] * data_center.pools
     for pool in range(data_center.pools):
         pool_servers = [server for server, server_pool in enumerate(solution.pools) if server_pool == pool]
+        pool_servers = [server for server in pool_servers if any(server in row for row in solution.dataCenter)]
         total_pool_capacity = sum(data_center.servers[server].capacity for server in pool_servers)
         capacities_per_row = [0] * data_center.rows
         for row in range(data_center.rows):

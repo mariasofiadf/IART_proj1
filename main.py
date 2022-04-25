@@ -8,7 +8,7 @@ from src.algorithms.simulated_annealing import simulated_annealing, linear_sched
 from src.algorithms.tabu import tabu_search
 from src.io.read import read_data_center, write_solution
 from src.neighbourhood.neighbourhood import Neighbourhood
-from src.solution.data_center import Solution
+from src.solution.data_center import DataCenter, Solution, Server
 from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
@@ -20,6 +20,7 @@ from multiprocessing import Process as worker, Queue
 
 
 if __name__ == '__main__':
+
     if len(sys.argv) <= 3:
         print("Usage: python main.py <input_file> <options>")
         print("Usage: python main.py <input_file> hillclimbing_basic <iterations>")
