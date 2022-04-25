@@ -77,6 +77,7 @@ if __name__ == '__main__':
         sol = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
     elif algorithm == 'all':
         plot_all(data_center,iterations,initial_solution,neighbour_modes)
+        plot_genetic(data_center,iterations,neighbour_modes)
         exit()
     elif algorithm == 'plotgenetic':
         plot_genetic(data_center,iterations,neighbour_modes)
