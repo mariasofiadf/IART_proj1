@@ -260,5 +260,5 @@ def plot_sa_non_linear(curr_y_axis, best_y_axis, iterations):
     pyplot.plot(x_axis, best_y_axis, color = "blue")
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
-    pyplot.title('Simmulated Annealing - Logarithmical cooling ')
-    pyplot.savefig('plots/sa_log.png',bbox_inches='tight')
+    pyplot.title('Simmulated Annealing - Exponential cooling ')
+    pyplot.savefig('plots/sa_exp.png',bbox_inches='tight')
