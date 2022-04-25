@@ -1,4 +1,5 @@
 from math import exp
+from typing import ByteString
 
 from numpy.random import rand
 
@@ -10,12 +11,12 @@ from src.solution.solution import random_solution
 from numpy.random import rand
 from matplotlib import pyplot
 
-def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule_function, evaluations=None,
-                        it_list=None):
-    if evaluations is None:
-        evaluations = []
-    if it_list is None:
-        it_list = []
+def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule_function, curr_evals=None,
+                        best_evals=None):
+    if curr_evals is None:
+        curr_evals = []
+    if best_evals is None:
+        best_evals = []
 
     # initial point
     best = random_solution(config)
@@ -27,6 +28,9 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
         temp = schedule_function(init_temp, iterations, temp)
         # new solution
         new_sol = get_random_neighbour(curr, config)
+        while(evaluate_solution(new_sol, config)==0):
+            new_sol = get_random_neighbour(curr, config)
+            
         new_sol_eval = evaluate_solution(new_sol, config)
         if(new_sol_eval > best_eval):
             best = new_sol
@@ -40,10 +44,10 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
             #print('>%d  = %.5f, prob: %.3f, temp: %.3f' % (i, best_eval, probabilty, temp))
         if(diff > 0 or rand() < probabilty):
             curr, curr_eval = new_sol, new_sol_eval  
-
-        evaluations.append(best_eval)
-        it_list.append(i)
-    return best, evaluations
+        print("curr_eval: ", curr_eval)
+        curr_evals.append(curr_eval)
+        best_evals.append(best_eval)
+    return best, curr_evals, best_evals
 
 
 def non_linear_schedule(init_temp, iterations, temp):
