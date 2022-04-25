@@ -1,4 +1,8 @@
+To run execute and get usage display:
 
+```sh
+python main.py
+```
 
 # References
 Python Data Classes: https://docs.python.org/3/library/dataclasses.html
