@@ -194,7 +194,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes, problem
     if(problem_size == 'big'):
         tenure = 200
     else:
-        tenure = 100
+        tenure = 0
     args.func, args.i, args.max_tenure = 'tabu', 3, tenure
     process = worker(target=timed_func, args=(args,))
     process.start()
@@ -230,7 +230,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes, problem
 
     ## Plot line graph
     x_axis = list(range(1, iterations))
-    colors = ['blue', 'cyan', 'green', 'yellow', 'orange','red','purple']
+    colors = ['blue', 'cyan', 'green', 'red']
     x_shape = 0
     for i, v in enumerate(values):
         ys = v[2]
