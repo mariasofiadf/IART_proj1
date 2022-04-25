@@ -100,6 +100,8 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     '10% MUT\n50% REG',
     '1% MUT\n50% REG']
 
+
+
     x_axis = np.arange(len(algorithms))
     pyplot.figure(figsize=(8, 5))
     pyplot.bar(x_axis - 0.2, evaluations,width=0.4,color='red', label='value')
@@ -107,6 +109,8 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     pyplot.legend(loc=(1.05,0.5))
     pyplot.xticks(x_axis, algorithms)
     pyplot.title('Genetic Algorithm')
+    ax = pyplot.gca()
+    ax.set_ylim(ymin = 0)
     pyplot.savefig('plots/genetic_bar.png',bbox_inches='tight')
     pyplot.clf()
 
@@ -114,10 +118,11 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     colors = ['blue', 'cyan', 'green', 'yellow', 'orange','red','purple']
     for i, v in enumerate(ga_values):
         pyplot.plot(x_axis, v[2], color = colors[i])
-
-    pyplot.legend(algorithms,loc=(1.05,0.5))
+    pyplot.legend(algorithms,loc=(1.05,0.2))
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
+    ax = pyplot.gca()
+    ax.set_ylim(ymin = 0)
     pyplot.savefig('plots/genetic_line.png',bbox_inches='tight')
 
 
