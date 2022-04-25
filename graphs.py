@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import sys
-from markupsafe import string
+import string
 from matplotlib import pyplot
 from src.algorithms.simulated_annealing import linear_schedule, non_linear_schedule, simulated_annealing
 from src.algorithms.tabu import tabu_search
