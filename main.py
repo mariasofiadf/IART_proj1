@@ -27,6 +27,7 @@ if __name__ == '__main__':
         print("Usage: python main.py <input_file> hillclimbing_steepest_ascent <iterations>")
         print("Usage: python main.py <input_file> genetic <population_size> <generations> <mutation> <replaced_each_gen>")
         print("Usage: python main.py <input_file> simulatedannealing <iterations> <initial_temperature> <temperature_mode>")
+        print("Usage: python main.py <input_file> tabu <iterations> <max_tenure>")
         print("Usage: python main.py <input_file> all <iterations>")
         exit(1)
 
@@ -51,7 +52,6 @@ if __name__ == '__main__':
         generations = int(sys.argv[4])
         mutation_chance = float(sys.argv[5])
         replaced_each_generation = float(sys.argv[6])
-        print(population_size)
         sol,_ = genetic(data_center, initial_solution, neighbour_modes,generations, population_size, mutation_chance,
                       replaced_each_generation)
 
