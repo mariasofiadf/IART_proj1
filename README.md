@@ -1,4 +1,4 @@
-To run execute and get usage display:
+To run and get usage display:
 
 ```sh
 python main.py
