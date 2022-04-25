@@ -1,5 +1,6 @@
 from math import exp
 from typing import ByteString
+from cv2 import log
 
 from numpy.random import rand
 
@@ -25,7 +26,7 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
     
     temp = init_temp
     for i in range(iterations - 1):
-        temp = schedule_function(init_temp, iterations, temp)
+        temp = schedule_function(init_temp, iterations, i, temp)
         # new solution
         new_sol = get_random_neighbour(curr, config)
         while(evaluate_solution(new_sol, config)==0):
@@ -49,9 +50,9 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
     return best, curr_evals, best_evals
 
 
-def non_linear_schedule(init_temp, iterations, temp):
-    return temp / 1.05
+def non_linear_schedule(init_temp, iterations,i, temp):
+    print(temp)
+    return init_temp * (0.96**i) 
 
-
-def linear_schedule(init_temp, iterations, temp):
+def linear_schedule(init_temp, iterations,i, temp):
     return temp - init_temp / iterations

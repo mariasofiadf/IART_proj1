@@ -238,12 +238,22 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
     pyplot.savefig('plots/all_line.png',bbox_inches='tight')
 
 
-def plot_sa(curr_y_axis, best_y_axis, iterations):
+def plot_sa_linear(curr_y_axis, best_y_axis, iterations):
     x_axis = list(range(1, iterations))
     pyplot.plot(x_axis, curr_y_axis, color = "red")
 
     pyplot.plot(x_axis, best_y_axis, color = "blue")
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
-    pyplot.title('Simmulated Annealing')
+    pyplot.title('Simmulated Annealing - Linear Cooling')
     pyplot.savefig('plots/sa_linear.png',bbox_inches='tight')
+
+def plot_sa_non_linear(curr_y_axis, best_y_axis, iterations):
+    x_axis = list(range(1, iterations))
+    pyplot.plot(x_axis, curr_y_axis, color = "red")
+
+    pyplot.plot(x_axis, best_y_axis, color = "blue")
+    pyplot.ylabel('Evaluation')
+    pyplot.xlabel('Iteration')
+    pyplot.title('Simmulated Annealing - Logarithmical cooling ')
+    pyplot.savefig('plots/sa_log.png',bbox_inches='tight')

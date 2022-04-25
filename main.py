@@ -1,6 +1,6 @@
 import sys
 from matplotlib import pyplot
-from graphs import plot_all, plot_genetic, plot_sa
+from graphs import plot_all, plot_genetic, plot_sa_linear, plot_sa_non_linear
 from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
 from src.algorithms.hill_climbing import hill_climbing_basic_random, hill_climbing_basic, hill_climbing_steepest_ascent
@@ -70,9 +70,11 @@ if __name__ == '__main__':
         if temperature_mode == 'linear':
 
             sol, curr_y_axis, best_y_axis = simulated_annealing(data_center, iterations, initial_temperature, linear_schedule)
-            plot_sa(curr_y_axis, best_y_axis, iterations)
+            plot_sa_linear(curr_y_axis, best_y_axis, iterations)
         else:
-            sol, _ = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
+            sol, curr_y_axis, best_y_axis = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
+            plot_sa_non_linear(curr_y_axis, best_y_axis, iterations)
+
     elif algorithm == 'tabu':
         max_tenure = int(sys.argv[4])
         sol, _ = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
