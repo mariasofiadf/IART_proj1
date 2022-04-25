@@ -18,7 +18,6 @@ def genetic(config: DataCenter, solution: Solution, neighbour_modes,generations,
 
     bestSolution = population[0]
 
-
     # Generate generations
     for gen in range(generations -1):
         population = get_new_population(population, config, mutation_chance, neighbour_modes, replaced_each_generation)

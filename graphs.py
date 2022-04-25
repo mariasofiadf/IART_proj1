@@ -176,7 +176,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
     process.start()
     threads.append(process)
     
-    args.func,args.i, args.iterations = 'genetic', 1, iterations//population_size + 1
+    args.func,args.i, args.iterations = 'genetic', 1, (iterations//population_size+1)*2
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
