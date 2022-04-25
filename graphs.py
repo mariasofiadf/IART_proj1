@@ -148,7 +148,7 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     pyplot.clf()
 
     x_axis = list(range(1, iterations))
-    colors = ['blue', 'cyan', 'green', 'yellow', 'orange','red','purple']
+    colors = ['blue', 'cyan', 'green', 'red', 'orange','red','purple']
     for i, v in enumerate(ga_values):
         pyplot.plot(x_axis, v[2], color = colors[i])
     pyplot.legend(algorithms,loc=(1.05,0.2))
