@@ -7,7 +7,7 @@ from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution
 
 
-TRIES = 10
+TRIES = 4
 
 def genetic(config: DataCenter, solution: Solution, neighbour_modes,generations, population_size=100, mutation_chance=1,
             replaced_each_generation=1):
@@ -23,13 +23,15 @@ def genetic(config: DataCenter, solution: Solution, neighbour_modes,generations,
 
     # Generate generations
     for gen in range(generations -1):
-        print("Gen", gen)
         population = get_new_population(population, config, mutation_chance, neighbour_modes, replaced_each_generation)
         # Get best solution of current population
+        currBest = population[0]
         for sol in population:
+            if evaluate_solution(sol, config) > evaluate_solution(currBest, config):
+                currBest = sol
             if evaluate_solution(sol, config) > evaluate_solution(bestSolution, config):
                 bestSolution = sol
-        evaluations.append(evaluate_solution(bestSolution,config))
+        evaluations.append(evaluate_solution(currBest,config))
 
     return bestSolution, evaluations
 
@@ -48,7 +50,6 @@ def get_new_population(population, config, mutation_chance, neighbour_modes,repl
     popSize = len(population)
 
     while len(newPopulation) < (popSize - replaced_each_generation*popSize):
-        print("Adding")
         x = (choices(population, roulette))[0]
         newPopulation.append(x)
 
@@ -57,11 +58,9 @@ def get_new_population(population, config, mutation_chance, neighbour_modes,repl
     while len(newPopulation) < popSize:
         # Get parent 1 according to roulette
         x = (choices(population, roulette))[0]
-        print("Getting parent x")
         tries = 0
         while tries < TRIES:
             # Get parent 2 that is different to parent 1
-            print("Getting parent y")
             y = (choices(population, roulette))[0]
             if y != x:
                 break

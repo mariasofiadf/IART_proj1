@@ -1,5 +1,6 @@
 from math import exp
 from typing import ByteString
+from numpy import tri
 
 from numpy.random import rand
 
@@ -10,6 +11,8 @@ from src.solution.solution import random_solution
 
 from numpy.random import rand
 from matplotlib import pyplot
+
+TRIES = 100
 
 def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule_function, curr_evals=None,
                         best_evals=None):
@@ -28,8 +31,10 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
         temp = schedule_function(init_temp, iterations, i, temp)
         # new solution
         new_sol = get_random_neighbour(curr, config)
-        while(evaluate_solution(new_sol, config)==0):
+        tries = 0
+        while(evaluate_solution(new_sol, config)==0 and tries < TRIES):
             new_sol = get_random_neighbour(curr, config)
+            tries += 1
 
         new_sol_eval = evaluate_solution(new_sol, config)
         if(new_sol_eval > best_eval):

@@ -17,7 +17,7 @@ import time
 
 from multiprocessing import Process as worker, Queue
 from operator import add
-RUNS = 4
+RUNS = 3
 
 @dataclass
 class Args:
@@ -73,7 +73,7 @@ def timed_func(args: Args):
 
 def plot_genetic(data_center, iterations, neighbour_modes):
     initial_solution = random_solution(data_center)
-    ga_values = [[0,0] for x in range(7)]
+    ga_values = [[0,0] for x in range(4)]
 
     population_size = 80
     threads = []
@@ -101,20 +101,20 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     process.start()
     threads.append(process)
 
-    args.mutation_chance, args.replaced_each_generation, args.i = 1, 0.5, 4
-    process = worker(target=timed_func, args = (args,))
-    process.start()
-    threads.append(process)
+    # args.mutation_chance, args.replaced_each_generation, args.i = 1, 0.5, 4
+    # process = worker(target=timed_func, args = (args,))
+    # process.start()
+    # threads.append(process)
 
-    args.mutation_chance, args.i = 0.1, 5
-    process = worker(target=timed_func, args=(args,))
-    process.start()
-    threads.append(process)
+    # args.mutation_chance, args.i = 0.1, 5
+    # process = worker(target=timed_func, args=(args,))
+    # process.start()
+    # threads.append(process)
 
-    args.mutation_chance, args.i = 0.01, 6
-    process = worker(target=timed_func, args =(args,))
-    process.start()
-    threads.append(process)
+    # args.mutation_chance, args.i = 0.01, 6
+    # process = worker(target=timed_func, args =(args,))
+    # process.start()
+    # threads.append(process)
 
     # We now pause execution on the main thread by 'joining' all of our started threads.
     # This ensuq that each has finished processing the urls.
@@ -132,10 +132,7 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     algorithms = ["Hill\nClimbing", 
     "100% MUT\n100% REG",
     '10% MUT\n100% REG',
-    '1% MUT\n100% REG',    
-    "100% MUT\n50% REG",
-    '10% MUT\n50% REG',
-    '1% MUT\n50% REG']
+    '1% MUT\n100% REG']
 
 
 
@@ -194,7 +191,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes, problem
     if(problem_size == 'big'):
         tenure = 200
     else:
-        tenure = 0
+        tenure = 100
     args.func, args.i, args.max_tenure = 'tabu', 3, tenure
     process = worker(target=timed_func, args=(args,))
     process.start()
