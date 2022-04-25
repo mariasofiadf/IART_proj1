@@ -79,7 +79,11 @@ if __name__ == '__main__':
         max_tenure = int(sys.argv[4])
         sol, _ = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
     elif algorithm == 'all':
-        plot_all(data_center,iterations,initial_solution,neighbour_modes)
+        if(input_file == 'data/problem_2.txt'):
+            problem_size = 'big'
+        else:
+            problem_size = 'small'
+        plot_all(data_center,iterations,initial_solution,neighbour_modes,problem_size)
         exit()
     elif algorithm == 'plotgenetic':
         plot_genetic(data_center,iterations,neighbour_modes)

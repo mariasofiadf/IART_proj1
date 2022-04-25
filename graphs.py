@@ -163,7 +163,7 @@ def plot_genetic(data_center, iterations, neighbour_modes):
 
 
 
-def plot_all(data_center, iterations, initial_solution, neighbour_modes):
+def plot_all(data_center, iterations, initial_solution, neighbour_modes, problem_size):
 
     q = Queue()
     threads = []
@@ -177,7 +177,11 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
     process.start()
     threads.append(process)
     
-    args.func,args.i, args.iterations = 'genetic', 1, (iterations//population_size+1)*2
+    if(problem_size == 'big'):
+        it = max(iterations//population_size//2, 20)
+    else:
+        it = iterations
+    args.func,args.i, args.iterations = 'genetic', 1, it
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
@@ -187,7 +191,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
     process.start()
     threads.append(process)
 
-    args.func, args.i, args.max_tenure = 'tabu', 3, 10
+    args.func, args.i, args.max_tenure = 'tabu', 3, 200
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
@@ -232,6 +236,7 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
         pyplot.plot(x_axis, ys, color = colors[i])
 
     pyplot.legend(algorithms,loc=(1.05,0.2))
+    pyplot.title('Algorithms Comparison')
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
     ax = pyplot.gca()

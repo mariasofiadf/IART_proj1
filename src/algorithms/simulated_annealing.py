@@ -1,6 +1,5 @@
 from math import exp
 from typing import ByteString
-from cv2 import log
 
 from numpy.random import rand
 
@@ -51,7 +50,6 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
 
 
 def non_linear_schedule(init_temp, iterations,i, temp):
-    print(temp)
     return init_temp * (0.96**i) 
 
 def linear_schedule(init_temp, iterations,i, temp):
