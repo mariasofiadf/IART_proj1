@@ -1,4 +1,3 @@
-from django.urls import conf
 from src.neighbourhood.neighbourhood import get_random_neighbour
 from src.solution.evaluation import evaluate_solution
 from src.solution.solution import random_solution

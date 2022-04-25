@@ -72,9 +72,8 @@ if __name__ == '__main__':
         else:
             sol, _ = simulated_annealing(data_center, iterations, initial_temperature, non_linear_schedule)
     elif algorithm == 'tabu':
-        iterations = int(sys.argv[3])
         max_tenure = int(sys.argv[4])
-        sol = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
+        sol, _ = tabu_search(data_center, iterations, neighbour_modes, max_tenure)
     elif algorithm == 'all':
         plot_all(data_center,iterations,initial_solution,neighbour_modes)
         plot_genetic(data_center,iterations,neighbour_modes)
