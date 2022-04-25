@@ -73,14 +73,14 @@ def timed_func(args: Args):
 
 def plot_genetic(data_center, iterations, neighbour_modes):
     initial_solution = random_solution(data_center)
-    ga_values = [[0,0] for x in range(4)]
+    ga_values = [[0,0,0] for x in range(5)]
 
     population_size = 80
     threads = []
 
     q = Queue()
 
-    args = Args(data_center, iterations, initial_solution,q,0,population_size,1,1, 'hillclimb', neighbour_modes,0,'',0)
+    args = Args(data_center, iterations, initial_solution,q,0,population_size,0.01,1, 'hillclimb', neighbour_modes,0,'',0)
 
     process = worker(target=timed_func, args=(args,))
     process.start()
@@ -96,7 +96,12 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     process.start()
     threads.append(process)
 
-    args.mutation_chance, args.i = 0.01, 3
+    args.mutation_chance, args.replaced_each_generation, args.i = 0.01, 0.5, 3
+    process = worker(target=timed_func, args=(args,))
+    process.start()
+    threads.append(process)
+
+    args.mutation_chance, args.replaced_each_generation, args.i = 0.1, 0.5, 4
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
@@ -111,10 +116,6 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     # process.start()
     # threads.append(process)
 
-    # args.mutation_chance, args.i = 0.01, 6
-    # process = worker(target=timed_func, args =(args,))
-    # process.start()
-    # threads.append(process)
 
     # We now pause execution on the main thread by 'joining' all of our started threads.
     # This ensuq that each has finished processing the urls.
@@ -130,11 +131,10 @@ def plot_genetic(data_center, iterations, neighbour_modes):
         times = [t/10 for t in times]
         time_label = "time (decasec)"
     algorithms = ["Hill\nClimbing", 
-    "100% MUT\n100% REG",
+    "1% MUT\n100% REG",
     '10% MUT\n100% REG',
-    '1% MUT\n100% REG']
-
-
+    '1% MUT\n50% REG',
+    '10% MUT\n50% REG']
 
     x_axis = np.arange(len(algorithms))
     pyplot.figure(figsize=(8, 5))
