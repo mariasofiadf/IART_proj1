@@ -41,7 +41,7 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
         if(diff > 0 or rand() < probabilty):
             curr, curr_eval = new_sol, new_sol_eval  
 
-        evaluations.append(curr_eval)
+        evaluations.append(best_eval)
         it_list.append(i)
     return best, evaluations
 
