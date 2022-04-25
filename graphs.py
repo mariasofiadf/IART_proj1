@@ -122,8 +122,8 @@ def plot_genetic(data_center, iterations, neighbour_modes):
         ga_values[i] = sol[0], sol[1],y_axis
         process.join()
 
-    evaluations = [v[0]/RUNS for v in ga_values]
-    times = [v[1]/RUNS for v in ga_values]
+    evaluations = [v[0] for v in ga_values]
+    times = [v[1] for v in ga_values]
     time_label = "time (sec)"
     if(max(times) > max(evaluations)):
         times = [t/10 for t in times]
@@ -197,8 +197,8 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
         process.join()
 
 
-    evaluations = [v[0]/RUNS for v in values]
-    times = [v[1]/RUNS for v in values]
+    evaluations = [v[0] for v in values]
+    times = [v[1] for v in values]
     time_label = "time (sec)"
     if(max(times) > max(evaluations)):
         times = [t/10 for t in times]
