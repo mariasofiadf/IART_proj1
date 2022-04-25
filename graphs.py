@@ -110,7 +110,6 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     pyplot.xticks(x_axis, algorithms)
     pyplot.title('Genetic Algorithm')
     ax = pyplot.gca()
-    ax.set_ylim(ymin = 0)
     pyplot.savefig('plots/genetic_bar.png',bbox_inches='tight')
     pyplot.clf()
 
@@ -122,7 +121,6 @@ def plot_genetic(data_center, iterations, neighbour_modes):
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
     ax = pyplot.gca()
-    ax.set_ylim(ymin = 0)
     pyplot.savefig('plots/genetic_line.png',bbox_inches='tight')
 
 
