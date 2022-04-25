@@ -5,7 +5,7 @@ import string
 from matplotlib import pyplot
 from src.algorithms.simulated_annealing import linear_schedule, non_linear_schedule, simulated_annealing
 from src.algorithms.tabu import tabu_search
-from src.algorithms.hill_climbing import hill_climbing_basic
+from src.algorithms.hill_climbing import hill_climbing_basic, hill_climbing_basic_random
 from src.solution.evaluation import evaluate_solution
 from src.algorithms.genetic import genetic
 from src.neighbourhood.neighbourhood import Neighbourhood
@@ -46,7 +46,7 @@ def timed_func(args: Args):
         if(args.func == 'genetic'):
             temp, y_axis_temp = genetic(args.data_center, args.initial_solution, args.neighbour_modes, args.iterations, args.population_size, args.mutation_chance, args.replaced_each_generation)
         elif(args.func == 'hillclimb'):
-            temp, y_axis_temp = hill_climbing_basic(args.data_center, args.iterations, args.initial_solution)
+            temp, y_axis_temp = hill_climbing_basic_random(args.data_center, args.iterations, args.initial_solution)
         elif(args.func == 'tabu'):
             temp, y_axis_temp = tabu_search(args.data_center, args.iterations, args.neighbour_modes, args.max_tenure)
         elif(args.func == 'annealing'):
@@ -168,21 +168,21 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes):
     q = Queue()
     threads = []
     values = [[0,0] for x in range(4)]
+    population_size = 50
 
-    args = Args(data_center, iterations, initial_solution,q,0,80,1,1, 'hillclimb', neighbour_modes, 100, 'linear', 10)
-
+    args = Args(data_center, iterations, initial_solution,q,0,population_size,1,1, 'hillclimb', neighbour_modes, 100, 'linear', 10)
 
     args.func,args.i = 'hillclimb', 0
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
     
-    args.func,args.i = 'genetic', 1
+    args.func,args.i, args.iterations = 'genetic', 1, iterations//population_size + 1
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
 
-    args.func, args.i, args.init_temp, args.cool_schedule = 'annealing', 2, 100, 'linear'
+    args.func, args.i, args.init_temp, args.cool_schedule, args.iterations = 'annealing', 2, 100, 'linear', iterations
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
