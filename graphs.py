@@ -191,7 +191,11 @@ def plot_all(data_center, iterations, initial_solution, neighbour_modes, problem
     process.start()
     threads.append(process)
 
-    args.func, args.i, args.max_tenure = 'tabu', 3, 200
+    if(problem_size == 'big'):
+        tenure = 200
+    else:
+        tenure = 100
+    args.func, args.i, args.max_tenure = 'tabu', 3, tenure
     process = worker(target=timed_func, args=(args,))
     process.start()
     threads.append(process)
