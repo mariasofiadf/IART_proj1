@@ -54,7 +54,7 @@ def timed_func(args: Args):
                 schedule_func = linear_schedule
             else:
                 schedule_func = non_linear_schedule
-            temp, y_axis_temp = simulated_annealing(args.data_center, args.iterations, args.init_temp, schedule_func)
+            temp,_, y_axis_temp = simulated_annealing(args.data_center, args.iterations, args.init_temp, schedule_func)
         else:
             print("Error: Invalid algorithm")
             return
@@ -245,4 +245,5 @@ def plot_sa(curr_y_axis, best_y_axis, iterations):
     pyplot.plot(x_axis, best_y_axis, color = "blue")
     pyplot.ylabel('Evaluation')
     pyplot.xlabel('Iteration')
+    pyplot.title('Simmulated Annealing')
     pyplot.savefig('plots/sa_linear.png',bbox_inches='tight')

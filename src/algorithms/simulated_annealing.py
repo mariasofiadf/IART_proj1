@@ -30,7 +30,7 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
         new_sol = get_random_neighbour(curr, config)
         while(evaluate_solution(new_sol, config)==0):
             new_sol = get_random_neighbour(curr, config)
-            
+
         new_sol_eval = evaluate_solution(new_sol, config)
         if(new_sol_eval > best_eval):
             best = new_sol
@@ -44,7 +44,6 @@ def simulated_annealing(config: DataCenter, iterations: int, init_temp, schedule
             #print('>%d  = %.5f, prob: %.3f, temp: %.3f' % (i, best_eval, probabilty, temp))
         if(diff > 0 or rand() < probabilty):
             curr, curr_eval = new_sol, new_sol_eval  
-        print("curr_eval: ", curr_eval)
         curr_evals.append(curr_eval)
         best_evals.append(best_eval)
     return best, curr_evals, best_evals
